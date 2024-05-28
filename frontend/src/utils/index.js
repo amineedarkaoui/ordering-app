@@ -47,3 +47,11 @@ export const formatCollapsedOrder = (sales) => {
     result = result.slice(0, -2)
     return result
 }
+export const formatExtendedOrder = (sales) => {
+    const elements = getOrderElements(sales)
+    let result = []
+    elements.forEach(element => {
+        result.push({text: `${element.count} x ${element.sale.item.name}`, price: `${ element.count>1 ? `(${element.sale.price} x ${element.count})` : ""} ${element.sale.price*element.count}`})
+    })
+    return result
+}

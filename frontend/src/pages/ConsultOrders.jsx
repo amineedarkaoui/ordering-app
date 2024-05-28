@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import SliderContainer from '../components/SliderContainer'
-import { getAllOrders } from '../api'
+import { getAllOrders, switchCancelOrder } from '../api'
 import OrderSummary from '../components/OrderSummary'
+import Alert from '../components/Alert'
+import { showAlert } from '../utils'
 
-const ConsultOrders = () => {
+const ConsultOrders = (props) => {
     const [orders, setOrders] = useState(null)
     const [isLoading, setLoading] = useState(true)
+    const [errorAlert, setErrorAlert] = useState(false)    
+    const [cancelAlert, setCancelAlert] = useState(false)
+    const [uncancelAlert, setUncancelAlert] = useState(false)
+    const [alertOut, setAlertOut] = useState(false)
     const [error, setError] = useState(false)
+    const [update, setUpdate] = useState(0)
+
+
 
     useEffect(() => {
         const getData = async () => {
@@ -17,12 +26,12 @@ const ConsultOrders = () => {
             } else {
                 setOrders(response)
             } 
-            }
-        
-            getData()
-    }, [])
+        }
+    
+        getData()
+    }, [update])
   return (
-    <SliderContainer orders={true} title="orders">
+    <SliderContainer switchCollapse={props.hide} orders={true} title="orders">
         {
             isLoading ?
             <div role="status" class="max-w-sm animate-pulse mt-6">
@@ -59,11 +68,29 @@ const ConsultOrders = () => {
                 <br/>
             </div>
             :
-            <div className='mt-4'>
-                {orders.map(order => <OrderSummary key={order.id} {...order} />)}
+            <div className='mt-4  h-full overflow-scroll'>
+                {orders.map(order => <OrderSummary 
+                    update={() => setUpdate(prev => prev+1)} 
+                    key={order.id} 
+                    {...order} 
+                    setLoading={setLoading} 
+                    setOrders={setOrders}
+                    error={() => showAlert(setErrorAlert, setAlertOut)}
+                    showCancelAlert={() => showAlert(setCancelAlert, setAlertOut)}    
+                    showUncancelAlert={() => showAlert(setUncancelAlert, setAlertOut)}    
+                />)}
             </div>
             
         }
+        {
+            errorAlert &&
+            <Alert alertOut={alertOut} error={true} text={`an error has occured, try again`} />}
+        {
+            cancelAlert &&
+            <Alert alertOut={alertOut} text={`order has been canceled successfully`} />}
+        {
+            uncancelAlert &&
+            <Alert alertOut={alertOut} text={`order has been uncanceled successfully`} />}
     </SliderContainer>
   )
 }

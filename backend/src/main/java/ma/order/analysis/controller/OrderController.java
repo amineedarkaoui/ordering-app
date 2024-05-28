@@ -35,4 +35,14 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
+
+    @PostMapping("/switch-cancel-order")
+    public ResponseEntity<?> switchCancelOrder(@RequestParam("id") long id) {
+        try {
+            return ResponseEntity.ok(orderService.switchCancelOrder(id));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+    }
+
 }

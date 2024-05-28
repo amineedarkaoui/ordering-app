@@ -23,7 +23,7 @@ public class OrderService {
     private final SaleRepository saleRepository;
     private final ModelMapper modelMapper;
 
-    public void placeOrder(List<PlaceOrderDTO> order) {
+    public void placeOrder(List<PlaceOrderDTO> order) throws Exception {
         Order savedOrder = orderRepository.save(Order.builder().build());
         List<SaleDTO> sales = new ArrayList<>();
         for (PlaceOrderDTO orderItem : order) {
@@ -39,11 +39,18 @@ public class OrderService {
         }
     }
 
-    public List<OrderDTO> getAllOrders() {
-        return orderRepository.findAllByOrderByCreatedAsc()
+    public List<OrderDTO> getAllOrders() throws Exception {
+        return orderRepository.findAllByOrderByCreatedDesc()
                 .stream()
                 .map(order ->
-                    modelMapper.map(order, OrderDTO.class))
+                        modelMapper.map(order, OrderDTO.class))
                 .toList();
+    }
+
+    public boolean switchCancelOrder(long id) throws Exception {
+        Order order = orderRepository.findById(id).get();
+        order.setCanceled(!(order.isCanceled()));
+        orderRepository.save(order);
+            return order.isCanceled();
     }
 }

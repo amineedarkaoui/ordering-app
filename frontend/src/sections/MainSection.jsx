@@ -112,6 +112,11 @@ const MainSection = () => {
       } 
   }
 
+  useEffect(() => {
+    if (showOrder) {
+      setConsultOrders(false)
+    }
+  }, [showOrder])
 
   useEffect(() => {
     localStorage.setItem("order", JSON.stringify(orderItems))
@@ -165,7 +170,9 @@ const MainSection = () => {
         }
         {
           consultOrders &&
-          <ConsultOrders />
+          <ConsultOrders
+            hide={() => setConsultOrders(false)}
+          />
         }
       </section> 
       </OrderContext.Provider>

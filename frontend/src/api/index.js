@@ -51,3 +51,14 @@ export const getAllOrders = async () => {
         return err
     }
 }
+
+export const switchCancelOrder = async (id) => {
+    try {
+        const response = await api.post(
+            `/order/switch-cancel-order?id=${id}`,{}
+        )
+        return response.data
+    } catch(err) {
+        return err
+    }
+}
