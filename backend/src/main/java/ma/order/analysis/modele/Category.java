@@ -3,6 +3,7 @@ package ma.order.analysis.modele;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +26,7 @@ public class Category {
     private Date created;
     @OneToMany(mappedBy = "category")
     private List<Item> items;
+    private boolean deleted;
     @Transient
     private int itemsNum;
 
@@ -32,6 +35,6 @@ public class Category {
         this.created = new Date();
     }
     public int getItemsNum() {
-        return this.items.size();
+        return this.items.stream().filter(item -> !item.isDeleted()).toList().size();
     }
 }

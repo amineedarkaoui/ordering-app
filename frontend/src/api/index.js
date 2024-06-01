@@ -62,3 +62,105 @@ export const switchCancelOrder = async (id) => {
         return err
     }
 }
+
+export const addNewCategory = async (name, image) => {
+    const data = new FormData()
+    data.append("name", name)
+    data.append("image", image)
+    try {
+        const response = await api.post(
+            `/category/add-new-category?`,
+            data,
+        )
+        return response.data
+    } catch(err) {
+        return err
+    }
+}
+
+export const deleteCategory = async (id) => {
+    try {
+        const response = await api.put(
+            `/category/delete-category?id=${id}`,
+            {}
+        )
+        return response.data
+    } catch(err) {
+        return err  
+    }
+}
+
+export const updateCategory = async (id, name, image) => {
+    const data = new FormData()
+    data.append("name", name)
+    data.append("image", image)
+    data.append("id", id)
+    try {
+        const response = await api.put(
+            `/category/update-category`,
+            data
+        )
+        return response.data
+    } catch(err) {
+        return err  
+    }
+}
+
+export const addNewItem = async (name, price, category) => {
+    try {
+        const response = await api.post(
+            `/item/add-new-item`,
+            category,
+            {params: {
+                "name": name,
+                "price": price,
+            }}
+        )
+        return response.data
+    } catch(err) {
+        return err  
+    }
+}
+export const updateItemImage = async (id, image) => {
+    const data = new FormData()
+    data.append("image", image)
+    data.append("id", id)
+    try {
+        const response = await api.put(
+            `/item/update-item-image`,
+            data
+        )
+        return response.data
+    } catch(err) {
+        return err  
+    }
+}
+
+export const deleteItem = async (id) => {
+    try {
+        const response = await api.put(
+            `/item/delete-item?id=${id}`,
+            {}
+        )
+        return response.data
+    } catch(err) {
+        return err  
+    }
+}
+
+export const updateItem = async (id, name, price, category) => {
+    try {
+        const response = await api.put(
+            `/item/update-item`,
+            category,
+            {params: {
+                "id": id,
+                "name": name,
+                "price": price,
+            }}
+        )
+        return response.data
+    } catch(err) {
+        return err  
+    }
+}

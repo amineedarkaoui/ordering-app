@@ -1,3 +1,5 @@
+import { navItems } from "../constants";
+
 export const showAlert = (alertState, hide) => {
     alertState(true)
     setTimeout(() => {
@@ -51,7 +53,12 @@ export const formatExtendedOrder = (sales) => {
     const elements = getOrderElements(sales)
     let result = []
     elements.forEach(element => {
-        result.push({text: `${element.count} x ${element.sale.item.name}`, price: `${ element.count>1 ? `(${element.sale.price} x ${element.count})` : ""} ${element.sale.price*element.count}`})
+        result.push({text: `${element.count} x ${element.sale.item.name}`, price: `${ element.count>1 ? `(${element.count} x ${element.sale.price})` : ""} ${element.sale.price*element.count}`})
     })
     return result
+}
+
+export const getTitle = path => {
+    const currentItem = navItems.find(item => path.startsWith(item.path))
+    return currentItem.text
 }

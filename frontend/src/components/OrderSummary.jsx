@@ -46,7 +46,7 @@ const OrderSummary = (props) => {
         {
             isExpanded ?
             formatExtendedOrder(props.sales).map(line => (
-                <div className='flex justify-between mr-8'>
+                <div key={line.price} className='flex justify-between mr-8'>
                     <p className='text-lg'>{line.text}</p>
                     <p className='text-lg'>{line.price} dh</p>
                 </div>

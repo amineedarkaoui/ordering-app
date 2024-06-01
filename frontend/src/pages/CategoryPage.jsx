@@ -55,6 +55,8 @@ const CategoryPage = () => {
             />
           ))
       }
+
+      
       
     </div>
   )

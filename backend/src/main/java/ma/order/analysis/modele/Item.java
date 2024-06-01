@@ -2,6 +2,7 @@ package ma.order.analysis.modele;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +21,7 @@ public class Item {
     private String name;
     private double price;
     private String image;
+    private boolean deleted;
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
     @ManyToOne(cascade = CascadeType.REMOVE)

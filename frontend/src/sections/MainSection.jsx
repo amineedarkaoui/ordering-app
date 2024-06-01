@@ -9,6 +9,7 @@ import LoadingScreen from '../components/LoadingScreen'
 import { placeOrder } from '../api'
 import { showAlert } from '../utils'
 import ConsultOrders from '../pages/ConsultOrders'
+import { mainPageItems, navHeaderItems } from '../constants'
 
 export const OrderContext = createContext(null)
 
@@ -142,7 +143,14 @@ const MainSection = () => {
         {/* main content */}
         <section>
           {/* nav header */}
-          <NavHeader small={showOrder || consultOrders} medium={isSliderCollapsed && showOrder} scroll={scrollPostion} />
+          <NavHeader 
+            items={navHeaderItems} 
+            small={showOrder || consultOrders} 
+            medium={isSliderCollapsed && showOrder} 
+            scroll={scrollPostion} 
+            setConsultOrders={setConsultOrders}
+            consultOrders={consultOrders}
+          />
         </section>
 
         <section>
