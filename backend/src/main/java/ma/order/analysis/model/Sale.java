@@ -1,4 +1,4 @@
-package ma.order.analysis.modele;
+package ma.order.analysis.model;
 
 
 import jakarta.persistence.*;
@@ -27,6 +27,8 @@ public class Sale {
     @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "order_id")
     private Order order;
+    @Column(columnDefinition = "boolean default false")
+    private boolean isCanceled;
 
 
     @PrePersist

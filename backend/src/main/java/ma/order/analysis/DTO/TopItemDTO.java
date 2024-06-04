@@ -6,15 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SaleDTO {
-    private Long id;
-    private double price;
-    private Date created;
+public class TopItemDTO {
     private ItemDTO item;
+    private long count;
+    private int pourcentage;
+    private boolean progress;
 }

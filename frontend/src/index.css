@@ -19,6 +19,12 @@
   }
 }
 
+@layer components {
+  .select {
+    @apply border-gray-500 border-[1px] p-1 rounded;
+  }
+}
+
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;

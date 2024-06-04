@@ -1,7 +1,6 @@
 package ma.order.analysis.repository;
 
-import ma.order.analysis.modele.Category;
-import ma.order.analysis.modele.Item;
+import ma.order.analysis.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

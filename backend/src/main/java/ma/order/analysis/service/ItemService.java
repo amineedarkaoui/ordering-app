@@ -6,8 +6,8 @@ import ma.order.analysis.DTO.CategoryDTO;
 import ma.order.analysis.DTO.ItemDTO;
 import ma.order.analysis.config.FileSaver;
 import ma.order.analysis.config.MediaFormater;
-import ma.order.analysis.modele.Category;
-import ma.order.analysis.modele.Item;
+import ma.order.analysis.model.Category;
+import ma.order.analysis.model.Item;
 import ma.order.analysis.repository.CategoryRepository;
 import ma.order.analysis.repository.ItemRepository;
 import org.modelmapper.ModelMapper;
@@ -70,6 +70,10 @@ public class ItemService {
         item.setName(name);
         item.setPrice(price);
         itemRepository.save(item);
+    }
+
+    public List<ItemDTO> findItemsBySalesNum() throws  Exception {
+        return itemRepository.findItemsBySalesNum().stream().map(sale -> modelMapper.map(sale, ItemDTO.class)).toList();
     }
 
 }

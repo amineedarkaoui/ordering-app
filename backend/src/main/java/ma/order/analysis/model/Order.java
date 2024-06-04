@@ -1,4 +1,5 @@
-package ma.order.analysis.modele;
+package ma.order.analysis.model;
+
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,24 +15,30 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
-public class Item {
+@Table(name = "client_order")
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private double price;
-    private String image;
-    private boolean deleted;
+    @Column(columnDefinition = "boolean default false")
+    private boolean isCanceled;
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "order")
     private List<Sale> sales;
+    @Transient
+    private double totalPrice;
 
     @PrePersist
     protected void onCreate() {
         this.created = new Date();
+    }
+
+    public double getTotalPrice() {
+        double total = 0;
+        for (Sale sale : this.sales) {
+            total += sale.getPrice();
+        }
+        return total;
     }
 }

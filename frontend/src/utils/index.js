@@ -62,3 +62,17 @@ export const getTitle = path => {
     const currentItem = navItems.find(item => path.startsWith(item.path))
     return currentItem.text
 }
+
+export const getIncomeProgressData = data => {
+    let months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    let values = Array(12).fill(0)
+
+    data.forEach(item => {
+        values[item.month-1] = item.income
+        for (let i = item.month; i < 12; i++) {
+            values[i] = null
+        }
+    })
+
+    return {'months':months, 'values':values}
+}

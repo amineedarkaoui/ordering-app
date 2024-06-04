@@ -45,4 +45,31 @@ public class OrderController {
         }
     }
 
+    @GetMapping("/get-monthly-orders")
+    public ResponseEntity<?> getMonthlyIncome() {
+        try {
+            return ResponseEntity.ok(orderService.getMonthlyOrders());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/get-avg-order-price")
+    public ResponseEntity<?> getAvgOrderPrice() {
+        try {
+            return ResponseEntity.ok(orderService.getAvgOrderPrice());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/get-peak-day")
+    public ResponseEntity<?> getPeakDay() {
+        try {
+            return ResponseEntity.ok(orderService.getPeakDay());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+    }
+
 }

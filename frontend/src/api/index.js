@@ -164,3 +164,102 @@ export const updateItem = async (id, name, price, category) => {
         return err  
     }
 }
+
+export const getTopItem = async () => {
+    try {
+        const response = await api.get(
+            `/sale/get-top-item`
+        )
+        return response.data
+    } catch(err) {
+        return err
+    }
+}
+
+export const getTopCategory = async () => {
+    try {
+        const response = await api.get(
+            `/sale/get-top-category`
+        )
+        return response.data
+    } catch(err) {
+        return err
+    }
+}
+
+export const getTopItems = async () => {
+    try {
+        const response = await api.get(
+            `/sale/get-top-items`
+        )
+        return response.data
+    } catch(err) {
+        return err
+    }
+}
+
+export const getMonthlyIncome = async () => {
+    try {
+        const response = await api.get(
+            `/sale/get-monthly-income`
+        )
+        return response.data
+    } catch(err) {
+        return err
+    }
+}
+
+export const getMonthlyOrders = async () => {
+    try {
+        const response = await api.get(
+            `/order/get-monthly-orders`
+        )
+        return response.data
+    } catch(err) {
+        return err
+    }
+}
+
+export const getAvgOrderPrice = async () => {
+    try {
+        const response = await api.get(
+            `/order/get-avg-order-price`
+        )
+        return response.data
+    } catch(err) {
+        return err
+    }
+}
+
+export const getPeakDay = async () => {
+    try {
+        const response = await api.get(
+            `/order/get-peak-day`
+        )
+        return response.data
+    } catch(err) {
+        return err
+    }
+}
+
+export const getIncomeProgress = async () => {
+    try {
+        const response = await api.get(
+            `/sale/get-income-progress`
+        )
+        return response.data
+    } catch(err) {
+        return err
+    }
+}
+
+export const getAllItems = async () => {
+    try {
+        const response = await api.get(
+            `/item/get-all-items`
+        )
+        return response.data
+    } catch(err) {
+        return err
+    }
+}

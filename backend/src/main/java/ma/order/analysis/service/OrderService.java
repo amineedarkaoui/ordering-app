@@ -3,11 +3,13 @@ package ma.order.analysis.service;
 
 import lombok.RequiredArgsConstructor;
 import ma.order.analysis.DTO.OrderDTO;
+import ma.order.analysis.DTO.OrdersByDay;
 import ma.order.analysis.DTO.PlaceOrderDTO;
 import ma.order.analysis.DTO.SaleDTO;
-import ma.order.analysis.modele.Item;
-import ma.order.analysis.modele.Order;
-import ma.order.analysis.modele.Sale;
+import ma.order.analysis.config.Utils;
+import ma.order.analysis.model.Item;
+import ma.order.analysis.model.Order;
+import ma.order.analysis.model.Sale;
 import ma.order.analysis.repository.OrderRepository;
 import ma.order.analysis.repository.SaleRepository;
 import org.modelmapper.ModelMapper;
@@ -22,6 +24,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final SaleRepository saleRepository;
     private final ModelMapper modelMapper;
+    private final Utils utils;
 
     public void placeOrder(List<PlaceOrderDTO> order) throws Exception {
         Order savedOrder = orderRepository.save(Order.builder().build());
@@ -49,8 +52,31 @@ public class OrderService {
 
     public boolean switchCancelOrder(long id) throws Exception {
         Order order = orderRepository.findById(id).get();
+        order.getSales().forEach(sale -> {
+            sale.setCanceled(!(sale.isCanceled()));
+            saleRepository.save(sale);
+        });
         order.setCanceled(!(order.isCanceled()));
         orderRepository.save(order);
-            return order.isCanceled();
+        return order.isCanceled();
+    }
+
+    public double getMonthlyOrders() throws Exception {
+        return orderRepository.getMonthlyOrders(utils.getPastMonth());
+    }
+    public String getAvgOrderPrice() throws Exception {
+        double sum = 0;
+        long count = 0;
+
+       for (Order order : orderRepository.findOrdersSince(utils.getPastMonth())) {
+           count++;
+           sum += order.getTotalPrice();
+       }
+
+       return String.format("%.2f", sum/count);
+    }
+
+    public OrdersByDay getPeakDay() throws Exception {
+        return orderRepository.getPeakDay(utils.getPastMonth());
     }
 }

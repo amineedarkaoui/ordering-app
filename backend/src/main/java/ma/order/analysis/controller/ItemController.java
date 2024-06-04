@@ -73,4 +73,13 @@ public class ItemController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
         }
     }
+
+    @GetMapping("/get-all-items")
+    public ResponseEntity<?> findItemsBySalesNum() {
+        try {
+            return ResponseEntity.ok(itemService.findItemsBySalesNum());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+    }
 }

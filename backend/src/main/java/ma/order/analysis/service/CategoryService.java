@@ -1,11 +1,10 @@
 package ma.order.analysis.service;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import ma.order.analysis.DTO.CategoryDTO;
 import ma.order.analysis.config.FileSaver;
 import ma.order.analysis.config.MediaFormater;
-import ma.order.analysis.modele.Category;
+import ma.order.analysis.model.Category;
 import ma.order.analysis.repository.CategoryRepository;
 import ma.order.analysis.repository.ItemRepository;
 import org.modelmapper.ModelMapper;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -43,6 +41,10 @@ public class CategoryService {
 
     public void deleteCategory(long id) throws Exception {
         Category category = categoryRepository.findById(id).get();
+        category.getItems().forEach(item -> {
+            item.setDeleted(true);
+            itemRepository.save(item);
+        });
         category.setDeleted(true);
         categoryRepository.save(category);
     }

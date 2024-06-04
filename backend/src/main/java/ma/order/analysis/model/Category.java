@@ -1,6 +1,7 @@
-package ma.order.analysis.modele;
+package ma.order.analysis.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +26,7 @@ public class Category {
     @Temporal(TemporalType.TIMESTAMP)
     private Date created;
     @OneToMany(mappedBy = "category")
+    @JsonIgnore
     private List<Item> items;
     private boolean deleted;
     @Transient

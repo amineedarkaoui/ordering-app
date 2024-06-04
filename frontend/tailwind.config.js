@@ -44,7 +44,8 @@ export default {
         '2fr-1fr': '2fr 1fr',
         '9fr-1fr': '12fr 1fr',
         'dashboard': '1.5fr 8.5fr',
-        '2-1': '2fr 1fr'
+        '2-1': '2fr 1fr',
+        '1-2': '1fr 2fr'
       },
       colors:{
         "primary": "#FFF8C7",
