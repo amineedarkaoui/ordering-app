@@ -91,12 +91,12 @@ const MenuAnalysis = () => {
               </select>
               <Filter 
                 onClick={() => setActiveFilter(0)} 
-                text="last week" 
+                text="last 7 days" 
                 isActive={activeFilter===0} 
               />
               <Filter 
                 onClick={() => setActiveFilter(1)} 
-                text="last month" 
+                text="last 30 days" 
                 isActive={activeFilter===1} 
               />
               <Filter 

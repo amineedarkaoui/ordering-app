@@ -22,7 +22,7 @@ const PerformanceCard = (props) => {
                   className='absolute top-0 h-full w-full object-cover group-hover:scale-110 transition-all duration-500 ease-out'
               />
             } 
-          </div>    
+          </div>
       }
 
       <div className='flex flex-col gap-2 justify-between h-full'>

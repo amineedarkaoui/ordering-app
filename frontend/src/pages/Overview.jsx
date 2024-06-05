@@ -63,7 +63,7 @@ const Overview = () => {
 
       <div className='grid grid-cols-2-1 gap-2'>
         <div>
-          <DashboardCard title="items sold">
+          <DashboardCard title="items sold" period="last 30 days">
             {
               !isLoading &&
               <BarChart 
@@ -85,7 +85,7 @@ const Overview = () => {
 
       <div>
         
-        <DashboardCard title="global income">
+        <DashboardCard title="global income" period="current year">
           {
             !isLoading &&
             <LineChart

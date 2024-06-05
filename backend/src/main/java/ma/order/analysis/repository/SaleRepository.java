@@ -2,9 +2,12 @@ package ma.order.analysis.repository;
 
 import ma.order.analysis.DTO.ItemSales;
 import ma.order.analysis.DTO.MonthIncome;
+import ma.order.analysis.DTO.SalesByDate;
+import ma.order.analysis.model.Item;
 import ma.order.analysis.model.TopCategory;
 import ma.order.analysis.model.TopItem;
 import ma.order.analysis.model.Sale;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -28,4 +31,7 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
 
     @Query("SELECT new ma.order.analysis.DTO.MonthIncome(MONTH(e.created), SUM(e.price)) FROM Sale e WHERE YEAR(e.created) = :year AND e.isCanceled = false GROUP BY MONTH(e.created)")
     List<MonthIncome> getIncomeProgress(long year);
+
+    @Query("SELECT new ma.order.analysis.DTO.SalesByDate(DATE(e.created), count(*)) FROM Sale e WHERE e.item = :item AND e.isCanceled = false AND e.created > :date GROUP BY DAYOFYEAR(e.created)")
+    List<SalesByDate> getSalesByDay(Item item, LocalDateTime date);
 }

@@ -7,6 +7,7 @@ import ma.order.analysis.config.MediaFormater;
 import ma.order.analysis.model.TopCategory;
 import ma.order.analysis.model.TopItem;
 import ma.order.analysis.config.Utils;
+import ma.order.analysis.repository.ItemRepository;
 import ma.order.analysis.repository.SaleRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class SaleService {
     private final Utils utils;
     private final ModelMapper modelMapper;
     private final MediaFormater mediaFormater;
+    private final ItemRepository itemRepository;
 
     public TopItemDTO getTopItem() throws Exception {
         TopItemDTO topItem = modelMapper.map(saleRepository.getTopItem(utils.getPastMonth()), TopItemDTO.class);
@@ -47,5 +49,9 @@ public class SaleService {
 
     public List<MonthIncome> getIncomeProgress() throws Exception {
         return saleRepository.getIncomeProgress(utils.getCurrentYear());
+    }
+
+    public List<SalesByDate> getSalesByDay() throws Exception {
+        return saleRepository.getSalesByDay(itemRepository.findById(28L).get(), utils.getDateMinusDays(7L));
     }
 }

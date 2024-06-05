@@ -14,4 +14,5 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
 
     @Query("SELECT e FROM Item e WHERE e.deleted = false ORDER BY SIZE(e.sales) DESC")
     List<Item> findItemsBySalesNum();
+
 }

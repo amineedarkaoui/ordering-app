@@ -18,4 +18,9 @@ public class Utils {
         LocalDateTime now = LocalDateTime.now();
         return now.getYear();
     }
+
+    public LocalDateTime getDateMinusDays(long days) {
+        LocalDateTime now = LocalDateTime.now();
+        return now.minusDays(days);
+    }
 }

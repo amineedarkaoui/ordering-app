@@ -63,4 +63,13 @@ public class SaleController {
         }
     }
 
+    @GetMapping("/get-sales-by-day")
+    public ResponseEntity<?> getSalesByDay() {
+        try {
+            return ResponseEntity.ok(saleService.getSalesByDay());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
+        }
+    }
+
 }

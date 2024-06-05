@@ -5,6 +5,10 @@ const DashboardCard = (props) => {
     <div className='p-2 bg-white rounded-sm shadow h-full'>
         <p className='text-sm'>{props.title}</p>
       {props.children}
+      <div className='flex justify-center'>
+        <p className='text-sm '>{props.period}</p>
+      </div>
+      
     </div>
   )
 }
