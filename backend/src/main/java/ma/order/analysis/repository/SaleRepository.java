@@ -1,6 +1,7 @@
 package ma.order.analysis.repository;
 
 import ma.order.analysis.DTO.ItemSales;
+import ma.order.analysis.DTO.ItemsTableRow;
 import ma.order.analysis.DTO.MonthIncome;
 import ma.order.analysis.DTO.SalesByDate;
 import ma.order.analysis.model.Item;
@@ -12,6 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,6 +34,15 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
     @Query("SELECT new ma.order.analysis.DTO.MonthIncome(MONTH(e.created), SUM(e.price)) FROM Sale e WHERE YEAR(e.created) = :year AND e.isCanceled = false GROUP BY MONTH(e.created)")
     List<MonthIncome> getIncomeProgress(long year);
 
-    @Query("SELECT new ma.order.analysis.DTO.SalesByDate(DATE(e.created), count(*)) FROM Sale e WHERE e.item = :item AND e.isCanceled = false AND e.created > :date GROUP BY DAYOFYEAR(e.created)")
-    List<SalesByDate> getSalesByDay(Item item, LocalDateTime date);
+    @Query("SELECT new ma.order.analysis.DTO.SalesByDate(DATE(e.created), count(*)) FROM Sale e WHERE e.item.id = :id AND e.isCanceled = false AND e.created > :date GROUP BY DAYOFYEAR(e.created)")
+    List<SalesByDate> getSalesByDay(long id, LocalDateTime date);
+
+    @Query("SELECT new ma.order.analysis.DTO.SalesByDate(DATE(e.created), count(*)) FROM Sale e WHERE e.item.id = :id AND e.isCanceled = false AND YEAR(e.created) = :year GROUP BY MONTH(e.created)")
+    List<SalesByDate> getSalesByYear(long id, long year);
+
+    @Query("SELECT new ma.order.analysis.DTO.ItemsTableRow(e.item.id, e.item.name, COUNT(*), SUM(e.price), COUNT(*)/:days, e.item.price) FROM Sale e WHERE e.isCanceled = false AND e.item.deleted = false AND e.created > :date GROUP BY e.item ORDER BY COUNT(*) DESC")
+    List<ItemsTableRow> getItemsTable(LocalDateTime date, Long days);
+
+    @Query("SELECT new ma.order.analysis.DTO.ItemsTableRow(e.item.id, e.item.name, COUNT(*), SUM(e.price), COUNT(*), e.item.price) FROM Sale e WHERE e.isCanceled = false AND e.item.deleted = false GROUP BY e.item ORDER BY COUNT(*) DESC")
+    List<ItemsTableRow> getItemsTableOfAllTime();
 }

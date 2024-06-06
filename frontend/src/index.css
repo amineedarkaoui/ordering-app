@@ -13,16 +13,21 @@
   }
 }
 
-@layer components {
-  .counter-btn {
-    @apply bg-primary min-h-8 min-w-8 rounded-md flex items-center justify-center text-2xl text-black active:scale-90;
-  }
-}
 
 @layer components {
   .select {
     @apply border-gray-500 border-[1px] p-1 rounded;
   }
+  .counter-btn {
+    @apply bg-primary min-h-8 min-w-8 rounded-md flex items-center justify-center text-2xl text-black active:scale-90;
+  }
+  .year-btn {
+    @apply rounded-lg p-1 flex items-center justify-center text-xl text-black active:scale-90 hover:bg-black/5;
+  }
+  .year-btn.disabled {
+    @apply opacity-20 hover:bg-black/0 hover:cursor-default;
+  }
+
 }
 
 input[type="number"]::-webkit-outer-spin-button,

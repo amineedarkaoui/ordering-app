@@ -187,10 +187,10 @@ export const getTopCategory = async () => {
     }
 }
 
-export const getTopItems = async () => {
+export const getTopItems = async (days) => {
     try {
         const response = await api.get(
-            `/sale/get-top-items`
+            `/sale/get-top-items?days=${days}`
         )
         return response.data
     } catch(err) {
@@ -257,6 +257,50 @@ export const getAllItems = async () => {
     try {
         const response = await api.get(
             `/item/get-all-items`
+        )
+        return response.data
+    } catch(err) {
+        return err
+    }
+}
+
+export const getWeeklyItemSales = async (id) => {
+    try {
+        const response = await api.get(
+            `/sale/get-weekly-item-sales?id=${id}`
+        )
+        return response.data
+    } catch(err) {
+        return err
+    }
+}
+
+export const getMonthlyItemSales = async (id) => {
+    try {
+        const response = await api.get(
+            `/sale/get-monthly-item-sales?id=${id}`
+        )
+        return response.data
+    } catch(err) {
+        return err
+    }
+}
+
+export const getItemSalesByYear = async (id, year) => {
+    try {
+        const response = await api.get(
+            `/sale/get-item-sales-by-year?id=${id}&year=${year}`
+        )
+        return response.data
+    } catch(err) {
+        return err
+    }
+}
+
+export const getItemsTable = async (days) => {
+    try {
+        const response = await api.get(
+            `/sale/get-items-table?days=${days}`
         )
         return response.data
     } catch(err) {

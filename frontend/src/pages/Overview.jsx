@@ -26,7 +26,7 @@ const Overview = () => {
     const getData = async () => {
         const topItem = await getTopItem()
         const topCategory = await getTopCategory()
-        const topItems = await getTopItems()
+        const topItems = await getTopItems(30)
         const income = await getMonthlyIncome()
         const orders = await getMonthlyOrders()
         const orderPrice = await getAvgOrderPrice()

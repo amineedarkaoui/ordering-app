@@ -4,6 +4,7 @@ package ma.order.analysis.service;
 import lombok.RequiredArgsConstructor;
 import ma.order.analysis.DTO.*;
 import ma.order.analysis.config.MediaFormater;
+import ma.order.analysis.model.Item;
 import ma.order.analysis.model.TopCategory;
 import ma.order.analysis.model.TopItem;
 import ma.order.analysis.config.Utils;
@@ -12,6 +13,7 @@ import ma.order.analysis.repository.SaleRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.DayOfWeek;
 import java.util.List;
 
 @Service
@@ -39,8 +41,8 @@ public class SaleService {
         return topCategory;
     }
 
-    public List<ItemSales> getTopItems() throws Exception {
-        return saleRepository.getTopItems(utils.getPastMonth());
+    public List<ItemSales> getTopItems(long days) throws Exception {
+        return saleRepository.getTopItems(utils.getDateMinusDays(days));
     }
 
     public double getMonthlyIncome() throws Exception {
@@ -51,7 +53,30 @@ public class SaleService {
         return saleRepository.getIncomeProgress(utils.getCurrentYear());
     }
 
-    public List<SalesByDate> getSalesByDay() throws Exception {
-        return saleRepository.getSalesByDay(itemRepository.findById(28L).get(), utils.getDateMinusDays(7L));
+    public SalesKeyValues getSalesByDay(long id) throws Exception {
+        return utils.getWeeklyItemSales(saleRepository.getSalesByDay(id, utils.getDateMinusDays(7L)));
+    }
+
+    public SalesKeyValues getMonthlySales(long id) throws Exception {
+        return utils.getMonthlyItemSales(saleRepository.getSalesByDay(id, utils.getDateMinusDays(30L)));
+    }
+
+    public SalesKeyValues getSalesByYear(long id, long year) throws Exception {
+        return utils.getItemSalesByYear(saleRepository.getSalesByYear(id, year));
+    }
+
+    public List<ItemsTableRow> getItemsTable(Long days) throws Exception {
+        List<ItemsTableRow> items = null;
+        if (days == null) {
+            items = saleRepository.getItemsTableOfAllTime();
+        } else {
+            items = saleRepository.getItemsTable(utils.getDateMinusDays(days), days);
+        }
+
+        return  items.stream().map(item -> {
+            double avg = days != null ? (double) item.getSalesNum() / days : 0;
+            item.setAvg((double)(Math.round(avg*100)) / 100);
+            return item;
+        }).toList();
     }
 }
